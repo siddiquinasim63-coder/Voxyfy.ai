@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Voxyfy AI Voice Studio – Hindi & English Text to Speech</title>
+<meta name="description" content="Hindi aur English text ko supported Piper voices se audio mein badlein.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Rozha+One&family=Hind:wght@400;500;600&display=swap">
+<!-- ADSENSE: approval ke baad apna script yahan paste karein
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+-->
+<style>
+:root{--bg:#0d0b14;--surf:#16121f;--surf2:#1e1829;--ink:#f6f1ea;--mute:#a49db4;--line:#2d2640;--v:#7c5cff;--p:#ff5c8a;--sun:#ffc35c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.65 Hind,system-ui,sans-serif;overflow-x:hidden}
+.glow{position:absolute;inset:0 0 auto 0;height:620px;background:radial-gradient(520px 320px at 85% 10%,#ff5c8a33,transparent 70%),radial-gradient(560px 360px at 10% 30%,#7c5cff40,transparent 70%);pointer-events:none}
+main{position:relative;max-width:780px;margin:0 auto;padding:0 20px 70px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0 8px}
+.logo{font:700 20px Unbounded,system-ui,sans-serif;line-height:1.1}
+.logo small{display:block;font:500 12px Hind,sans-serif;color:var(--mute);letter-spacing:.02em;margin-top:2px}
+.pro{font:500 13px Unbounded,sans-serif;border:1px solid var(--line);border-radius:99px;padding:6px 14px;color:var(--mute)}
+h1{font:400 clamp(44px,13vw,84px)/1.12 "Rozha One",Georgia,serif;margin:34px 0 14px}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--v),var(--p),var(--sun));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mute);font-size:19px;max-width:38ch;margin:0}
+#wave{display:block;width:100%;height:150px;margin:26px 0 6px}
+.ad{display:flex;align-items:center;justify-content:center;min-height:90px;margin:22px 0;border:1px dashed var(--line);border-radius:14px;color:var(--mute);font-size:13px;overflow:hidden}
+.studio{background:linear-gradient(180deg,var(--surf2),var(--surf));border:1px solid var(--line);border-radius:26px;padding:22px;box-shadow:0 40px 80px -40px #000,0 0 0 1px #ffffff08 inset}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
+.lbl{font:500 13px Unbounded,sans-serif;color:var(--mute);margin:0}
+.quota{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--mute)}
+.dots{display:flex;gap:5px}
+.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.dots i.on{background:linear-gradient(135deg,var(--v),var(--p))}
+.voices{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 22px}
+.voices input{position:absolute;opacity:0}
+.v{display:flex;flex-direction:column;align-items:center;gap:8px;border:1px solid var(--line);border-radius:18px;padding:16px 8px 14px;cursor:pointer;background:var(--surf);transition:border-color .15s,transform .15s}
+.av{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font:700 18px Unbounded,sans-serif;color:#fff}
+.f .av{background:linear-gradient(135deg,var(--p),var(--sun))}
+.m1 .av{background:linear-gradient(135deg,var(--v),#46b6ff)}
+.m2 .av{background:linear-gradient(135deg,#2fd6a1,var(--v))}
+.v b{font:500 14px Unbounded,sans-serif}
+.v small{color:var(--mute);font-size:13px;margin-top:-6px}
+.voices input:checked+.v{border-color:transparent;background:linear-gradient(var(--surf2),var(--surf2)) padding-box,linear-gradient(135deg,var(--v),var(--p)) border-box;border:1.5px solid transparent;transform:translateY(-2px)}
+.voices input:focus-visible+.v{outline:3px solid var(--sun);outline-offset:2px}
+textarea{width:100%;min-height:180px;resize:vertical;font:400 19px/1.7 Hind,sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:16px}
+textarea:focus-visible{outline:2px solid var(--v);outline-offset:1px}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0 18px;font-size:14px;color:var(--mute)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:none;border:1px solid var(--line);color:var(--mute);border-radius:99px;padding:3px 13px;font:inherit;font-size:14px;cursor:pointer}
+.chip:hover{color:var(--ink);border-color:var(--v)}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:0;border-radius:14px;padding:16px 26px;font:500 15px Unbounded,sans-serif;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--v),var(--p))}
+.btn.alt{background:none;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.bar{height:6px;border-radius:9px;background:var(--line);margin-top:18px;overflow:hidden;display:none}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--v),var(--p));transition:width .2s}
+#msg{min-height:1.7em;margin-top:12px;font-size:15px;color:var(--mute)}
+audio{width:100%;margin-top:14px;color-scheme:dark}
+h2{font:400 32px/1.2 "Rozha One",Georgia,serif;margin:50px 0 16px}
+.steps{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.step{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:18px}
+.step b{font:700 28px Unbounded,sans-serif;background:linear-gradient(135deg,var(--v),var(--p));-webkit-background-clip:text;background-clip:text;color:transparent}
+.step p{margin:6px 0 0;color:var(--mute);font-size:16px}
+footer{color:var(--mute);font-size:14px;margin-top:46px}
+footer a{color:inherit}
+/* video ad modal */
+#adModal{position:fixed;inset:0;z-index:50;background:#06040bdd;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
+#adModal.open{display:flex}
+.box{width:100%;max-width:520px;background:var(--surf);border:1px solid var(--line);border-radius:24px;padding:20px}
+.box h3{font:500 17px Unbounded,sans-serif;margin:0 0 4px}
+.box p{margin:0 0 14px;color:var(--mute);font-size:15px}
+.stage{aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;display:grid;place-items:center;position:relative}
+.stage video{width:100%;height:100%;object-fit:contain}
+.fake{text-align:center;color:var(--mute);font-size:14px;padding:12px}
+.fake b{display:block;font:700 44px Unbounded,sans-serif;color:var(--ink)}
+.prog{height:5px;background:var(--line);border-radius:9px;margin:14px 0;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--v),var(--p))}
+.row{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap}
+.pro{cursor:pointer;background:none;color:var(--ink)}
+body.is-pro .ad{display:none}
+.plans{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.plan{background:var(--surf);border:1px solid var(--line);border-radius:20px;padding:20px}
+.plan.hot{background:linear-gradient(var(--surf2),var(--surf2)) padding-box,linear-gradient(135deg,var(--v),var(--p)) border-box;border:1.5px solid transparent}
+.plan h3{font:500 15px Unbounded,sans-serif;margin:0 0 6px}
+.plan .pr{font:700 34px Unbounded,sans-serif;margin:0}
+.plan .pr small{font:400 15px Hind,sans-serif;color:var(--mute)}
+.plan ul{margin:14px 0 18px;padding-left:18px;color:var(--mute);font-size:16px}
+.plan .btn{width:100%;text-align:center;text-decoration:none;display:block}
+.hire{margin-top:50px;border-radius:22px;padding:24px;background:linear-gradient(135deg,#7c5cff33,#ff5c8a33);border:1px solid var(--line)}
+.hire h2{margin:0 0 6px;font-size:26px}
+.hire p{margin:0 0 16px;color:var(--mute)}
+.hire .btn{display:inline-block;text-decoration:none}
+details{border-bottom:1px solid var(--line);padding:14px 0}
+summary{cursor:pointer;font-weight:600}
+details p{margin:8px 0 0;color:var(--mute)}
+.pay{display:grid;gap:10px;margin:12px 0}
+.pay .btn{text-align:center;text-decoration:none;display:block}
+.pay input{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:13px;text-transform:uppercase}
+.pay small{color:var(--mute)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== Voxyfy: premium creator-app home refresh ===== */
+:root{--bg:#101010;--surf:#202020;--surf2:#272727;--ink:#f5f5f5;--mute:#929292;--line:#333;--v:#f5f5f5;--p:#bdbdbd;--sun:#fff}
+body{background:#101010;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.45}
+.glow{display:none}
+main{max-width:900px;padding:0 22px 110px}
+nav{padding:24px 0 22px;min-height:86px}
+.logo{font:750 24px/1 Inter,system-ui,sans-serif;letter-spacing:-.8px}
+.logo small{font:500 11px Inter,system-ui,sans-serif;color:#999;letter-spacing:.4px}
+.pro{background:#242424;border:1px solid #3b3b3b;border-radius:99px;padding:12px 19px;font:650 14px Inter,system-ui,sans-serif;color:#f5f5f5}
+.home-shell{padding:8px 0 30px}
+.home-title{font-size:clamp(34px,7vw,54px);font-weight:750;letter-spacing:-2px;margin:10px 0 30px}
+.create-main{width:100%;min-height:82px;border:0;border-radius:60px;background:#f1f1f1;color:#101010;font:750 25px Inter,system-ui,sans-serif;display:flex;align-items:center;justify-content:center;gap:14px;cursor:pointer;margin:0 0 28px}
+.create-main:hover{background:#fff;transform:translateY(-1px)}
+.quick-tools{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:42px}
+.quick-tool{min-height:76px;border:0;border-radius:48px;background:#222;color:#f4f4f4;font:700 clamp(15px,3.2vw,22px) Inter,system-ui,sans-serif;display:flex;align-items:center;justify-content:center;gap:12px;cursor:pointer;padding:12px}
+.quick-tool:hover,.quick-tool:focus-visible{background:#303030;outline:2px solid #666}
+.quick-tool .tool-icon{font-size:25px}
+.feature-banner{display:grid;grid-template-columns:34% 1fr;min-height:190px;border-radius:30px;overflow:hidden;background:#222;border:1px solid #2e2e2e;margin-bottom:48px}
+.feature-art{display:grid;place-items:center;background:linear-gradient(135deg,#b7a18a,#d65d46 40%,#0c4937 75%,#111);font-size:clamp(38px,8vw,76px);font-weight:800;letter-spacing:-4px}
+.feature-copy{padding:28px 30px;display:flex;flex-direction:column;justify-content:center}
+.feature-copy small{color:#929292;font-size:clamp(14px,2.4vw,20px);font-weight:700;margin-bottom:8px}
+.feature-copy strong{font-size:clamp(20px,3.5vw,32px);line-height:1.18;letter-spacing:-.8px}
+.section-row{display:flex;justify-content:space-between;align-items:center;margin:0 0 18px;color:#8d8d8d;font-size:21px;font-weight:750}
+.section-row button{background:none;border:0;color:#8d8d8d;font:inherit;cursor:pointer}
+.recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
+.project-card{min-height:255px;border-radius:26px;background:linear-gradient(145deg,#123451,#09223b);padding:20px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid #24445d;cursor:pointer;position:relative;overflow:hidden}
+.project-card:hover{filter:brightness(1.12)}
+.project-top{display:flex;justify-content:space-between;align-items:center;font-size:25px}
+.project-title{font-size:22px;line-height:1.25;font-weight:750;letter-spacing:-.4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.project-sub{font-size:16px;color:#a9b8c5;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:10px}
+.empty-project{color:#888;background:#1c1c1c;border:1px dashed #3b3b3b;border-radius:22px;padding:25px;text-align:center}
+.bottom-nav{position:fixed;z-index:40;left:0;right:0;bottom:0;background:rgba(35,35,35,.97);border-top:1px solid #393939;display:grid;grid-template-columns:repeat(5,1fr);padding:12px 8px calc(12px + env(safe-area-inset-bottom));backdrop-filter:blur(18px)}
+.bottom-nav button{border:0;background:none;color:#999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font:650 13px Inter,system-ui,sans-serif;cursor:pointer;min-width:0;padding:5px 2px}
+.bottom-nav button .nav-icon{font-size:25px;line-height:1.1}
+.bottom-nav button.active{color:#fff}
+.bottom-nav button.active .nav-icon{background:#3a3a3a;border-radius:30px;padding:7px 25px}
+#studioView{display:none;margin-top:12px}
+.creator-toolbar{display:flex;justify-content:space-between;align-items:center;margin:22px 0 12px;font-weight:750;font-size:17px}
+.creator-note{color:#929292;font-size:13px}
+.voice-library{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0 20px}
+.voice-choice{background:#202020;border:1px solid #3a3a3a;border-radius:18px;padding:14px 10px;color:#eee;text-align:left;cursor:pointer;min-width:0}
+.voice-choice.selected{border-color:#fff;box-shadow:0 0 0 1px #fff inset}
+.voice-choice .avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#3c3c3c;margin-bottom:10px;font-weight:800}
+.voice-choice strong,.voice-choice small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.voice-choice small{color:#aaa;margin-top:3px}
+.voice-choice button{margin-top:10px;background:#333;border:0;border-radius:20px;color:#fff;padding:7px 10px;cursor:pointer;font-size:12px}
+.voice-library-title{font-weight:750;margin:8px 0 4px}
+.voice-tools{display:grid;grid-template-columns:1fr auto;gap:9px;margin:10px 0 12px}
+.voice-search,.voice-filter{width:100%;min-width:0;background:#171717;border:1px solid #383838;border-radius:12px;color:#f5f5f5;padding:11px 12px;font:inherit;font-size:14px}
+.voice-search:focus,.voice-filter:focus{outline:2px solid #aaa;outline-offset:1px}
+.voice-status{color:#aaa;font-size:12px;margin:0 0 8px}
+.voice-choice[hidden]{display:none!important}
+.voice-choice small em{font-style:normal;color:#c4b5fd}
+@media(max-width:420px){.voice-tools{grid-template-columns:1fr}.voice-filter{min-height:42px}}
+@media(max-width:420px){.voice-library{grid-template-columns:1fr}.voice-choice{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:8px}.voice-choice .avatar{margin:0}.voice-choice button{margin:0}}
+.creator-settings{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 18px}
+.setting-card{display:grid;gap:12px;background:#202020;border:1px solid #363636;border-radius:18px;padding:15px;color:#ddd;font-size:14px}
+.setting-card span{display:flex;justify-content:space-between;gap:8px}
+.setting-card b{color:#fff}
+.setting-card input{width:100%;accent-color:#fff}
+@media(max-width:560px){.creator-settings{grid-template-columns:1fr}}
+body.studio-open #homeView{display:none}
+body.studio-open #studioView{display:block}
+body.studio-open .bottom-nav button[data-page="creator"]{color:#fff}
+body:not(.studio-open) #oldContent{display:none}
+#oldContent{margin-top:24px}
+#oldContent h2{font:750 24px Inter,system-ui,sans-serif;letter-spacing:-.6px}
+#oldContent .studio{background:#1d1d1d;border-color:#333}
+#oldContent textarea{background:#111;border-color:#383838}
+#oldContent .btn{background:#f1f1f1;color:#111;border-radius:99px}
+#oldContent .btn.alt{background:transparent;color:#f1f1f1;border:1px solid #444}
+body.studio-open #oldContent{display:block}
+body.studio-open #studioView .studio{display:block}
+@media(max-width:560px){main{padding-left:20px;padding-right:20px}.feature-banner{min-height:155px;grid-template-columns:34% 1fr}.feature-copy{padding:18px 16px}.quick-tools{gap:10px}.quick-tool{min-height:72px}.project-card{min-height:230px}.home-title{margin-top:4px}.create-main{min-height:76px;font-size:22px}}
+@media(prefers-reduced-motion:no-preference){.create-main,.quick-tool,.project-card{transition:transform .18s,background .18s,filter .18s}}
+
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+<main>
+  <nav>
+    <div class="logo">Voxyfy<small>AI VOICE STUDIO</small></div>
+    <button class="pro" id="proBtn" type="button">✦ Try Pro</button>
+  </nav>
+
+  <section class="home-shell" id="homeView" aria-label="Home dashboard">
+    <h1 class="home-title">Home</h1>
+    <button class="create-main" id="createNew" type="button"><span style="font-size:32px;font-weight:400">＋</span> Create new</button>
+    <div class="quick-tools">
+      <button class="quick-tool" id="openTTS" type="button"><span class="tool-icon">▥</span> Text To Speech</button>
+      <button class="quick-tool" id="openVideo" type="button"><span class="tool-icon">▦</span> Video Editor</button>
+    </div>
+    <div class="feature-banner">
+      <div class="feature-art">AI</div>
+      <div class="feature-copy"><small>Introducing Voxyfy Voice Studio</small><strong>Create natural Hindi voices in seconds.</strong></div>
+    </div>
+    <div class="section-row"><span>Recent projects</span><button id="seeAll" type="button">See all</button></div>
+    <div class="recent-grid" id="recentProjects">
+      <div class="empty-project">Your generated voice projects will appear here.</div>
+    </div>
+  </section>
+
+  <section id="studioView" aria-label="Text to speech editor">
+    <div class="section-row"><button id="backHome" type="button">← Home</button><span>Text to Speech</span><span></span></div>
+    <h1 style="font-size:30px;letter-spacing:-1px;margin:8px 0 18px">Create a voice</h1>
+    <p class="lead" style="font-size:15px;margin-bottom:18px">Write or paste your text, choose a voice, then generate audio.</p>
+    <div class="creator-toolbar"><span>Voice library</span><span class="creator-note" id="voiceCount">Hindi + English · Loading catalogue…</span></div>
+    <p class="voice-library-title">Choose your voice</p>
+    <div class="voice-tools">
+      <input class="voice-search" id="voiceSearch" type="search" placeholder="Search voices…" aria-label="Search voices">
+      <select class="voice-filter" id="voiceGender" aria-label="Filter by voice type"><option value="all">All voice types</option><option value="female">Female</option><option value="male">Male</option><option value="other">Other / unknown</option></select>
+      <select class="voice-filter" id="voiceLanguage" aria-label="Filter by language"><option value="all">Hindi + English</option><option value="hi">Hindi</option><option value="en">English</option></select>
+    </div>
+    <p class="voice-status" id="voiceStatus">Hindi and English voices supported by the installed Piper catalogue will appear here. First preview may download a voice model.</p>
+    <div class="voice-library" id="voiceLibrary">
+      <div class="voice-choice selected" data-voice="hi_IN-priyamvada-medium" data-name="priyamvada" data-gender="female"><span class="avatar">F</span><span><strong>Priyamvada</strong><small>Female · Hindi · <em>India</em></small></span><button type="button" data-preview="hi_IN-priyamvada-medium">▶ Preview</button></div>
+      <div class="voice-choice" data-voice="hi_IN-pratham-medium" data-name="pratham" data-gender="male"><span class="avatar">M</span><span><strong>Pratham</strong><small>Male · Hindi · <em>India</em></small></span><button type="button" data-preview="hi_IN-pratham-medium">▶ Preview</button></div>
+      <div class="voice-choice" data-voice="hi_IN-rohan-medium" data-name="rohan" data-gender="male"><span class="avatar">M</span><span><strong>Rohan</strong><small>Male · Hindi · <em>India</em></small></span><button type="button" data-preview="hi_IN-rohan-medium">▶ Preview</button></div>
+    </div>
+    <div class="creator-toolbar"><span>Voice settings</span><span class="creator-note">AI voice · Piper 1.0.5</span></div>
+    <div class="creator-settings">
+      <label class="setting-card" for="speedControl"><span>Speed <b id="speedValue">1.0×</b></span><input id="speedControl" type="range" min="0.75" max="1.5" step="0.05" value="1"></label>
+      <label class="setting-card" for="volumeControl"><span>Volume <b id="volumeValue">100%</b></span><input id="volumeControl" type="range" min="0" max="1" step="0.05" value="1"></label>
+    </div>
+    <p class="creator-note" style="margin:12px 2px 0">Speed aur volume generated audio playback par apply honge. Stability aur Similarity jaise model controls is Piper engine mein available nahi hain.</p>
+  </section>
+  <div id="oldContent">
+  <h1 style="display:none">शब्दों को मिले <em>आवाज़</em></h1>
+  <p class="lead" style="display:none">Hindi text likho, male ya female awaaz chuno, suno aur download karo. Roz 3 voices free.</p>
+  <canvas id="wave" aria-hidden="true" style="display:none"></canvas>
+  <div class="ad" id="adTop" style="display:none">Ad</div>
+
+  <section class="studio" aria-label="Voice studio">
+    <div class="top">
+      <p class="lbl">Studio</p>
+      <div class="quota"><div class="dots" id="dots"></div><span id="qtxt"></span></div>
+    </div>
+
+    <div class="voices" role="radiogroup" aria-label="Awaaz">
+      <label class="f"><input type="radio" name="v" value="hi_IN-priyamvada-medium" checked><span class="v"><span class="av">F</span><b>Priyamvada</b><small>Female</small></span></label>
+      <label class="m1"><input type="radio" name="v" value="hi_IN-pratham-medium"><span class="v"><span class="av">M</span><b>Pratham</b><small>Male</small></span></label>
+      <label class="m2"><input type="radio" name="v" value="hi_IN-rohan-medium"><span class="v"><span class="av">M</span><b>Rohan</b><small>Male</small></span></label>
+    </div>
+
+    <textarea id="text" maxlength="2000" placeholder="यहाँ हिंदी में लिखें या पेस्ट करें…" aria-label="Text"></textarea>
+    <div class="meta">
+      <div class="chips" id="chips"></div>
+      <span><span id="cnt">0</span> / <span id="mx">2000</span></span>
+    </div>
+
+    <div class="btns">
+      <button class="btn" id="gen" type="button">Awaaz banao</button>
+      <button class="btn alt" id="dl" type="button" disabled>Download</button>
+    </div>
+    <div class="ad" id="adDl">Ad</div>
+    <div class="bar" id="bar"><i id="fill"></i></div>
+    <div id="msg" role="status"></div>
+    <audio id="player" controls hidden></audio>
+    <div class="ad" id="adResult">Ad</div>
+  </section>
+
+  <!-- AD SLOT 2 -->
+  <div class="ad" id="adMid">Ad</div>
+
+  <h2>Teen step, bas</h2>
+  <div class="steps">
+    <div class="step"><b>1</b><p>Text likho ya paste karo.</p></div>
+    <div class="step"><b>2</b><p>Male ya female awaaz chuno.</p></div>
+    <div class="step"><b>3</b><p>Suno aur download karo. Roz 3 free, uske baad ek chhota video ad.</p></div>
+  </div>
+
+  <h2 id="pro">Voice Pro</h2>
+  <div class="plans">
+    <div class="plan"><h3>Free</h3><p class="pr">₹0</p>
+      <ul><li>Roz 3 free voices</li><li>Uske baad ek chhota video ad</li><li>2,000 characters tak</li></ul></div>
+    <div class="plan hot"><h3>Pro</h3><p class="pr">₹<span id="pp">49</span> <small>/ mahina</small></p>
+      <ul><li>Unlimited voices</li><li>Koi ad nahi</li><li>5,000 characters tak</li></ul>
+      <button class="btn" id="proBtn2" type="button">Pro lo</button></div>
+  </div>
+
+  <div class="hire">
+    <h2>Asli voice artist chahiye?</h2>
+    <p>Ad, YouTube ya audiobook ke liye professional Hindi voice over. 24 ghante mein delivery.</p>
+    <a class="btn" id="hireBtn" href="#" target="_blank" rel="noopener">WhatsApp par baat karo</a>
+  </div>
+
+  <h2>Sawaal-jawab</h2>
+  <details><summary>Kya Hindi text to speech free hai?</summary><p>Haan, roz 3 voices free hain. Uske baad ek chhota video ad dekhkar aur voices unlock hoti hain, ya Pro lekar unlimited use karo.</p></details>
+  <details><summary>Male aur female dono Hindi awaaz milti hain?</summary><p>Haan. Priyamvada female hai, aur Pratham aur Rohan male awaazein hain.</p></details>
+  <details><summary>Kya mera text kisi server par jata hai?</summary><p>Nahi, awaaz aapke device par hi banti hai.</p></details>
+  <details><summary>Commercial use ke baare mein?</summary><p>Terms page dekhein.</p></details>
+
+  <footer>© Voxyfy · <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Contact</a></footer>
+  </div>
+</main>
+<nav class="bottom-nav" aria-label="Main navigation">
+  <button class="active" data-page="home" type="button"><span class="nav-icon">⌂</span><span>Home</span></button>
+  <button data-page="creator" type="button"><span class="nav-icon">✳</span><span>Creator</span></button>
+  <button data-page="explore" type="button"><span class="nav-icon">▦</span><span>Explore</span></button>
+  <button data-page="templates" type="button"><span class="nav-icon">⬡</span><span>Templates</span></button>
+  <button data-page="new" type="button"><span class="nav-icon">⊕</span><span>New</span></button>
+</nav>
+
+<!-- PRO MODAL -->
+<div id="proModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="proTitle" style="position:fixed;inset:0;z-index:60;background:#06040bdd;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)">
+  <div class="box">
+    <h3 id="proTitle">Voice Pro · ₹<span id="pp2">49</span> / mahina</h3>
+    <p>Unlimited voices, koi ad nahi.</p>
+    <div class="pay">
+      <a class="btn" id="upiBtn" href="#">1. UPI se pay karo</a>
+      <a class="btn alt" id="waBtn" href="#" target="_blank" rel="noopener">2. WhatsApp par screenshot bhejo</a>
+      <input id="codeIn" placeholder="3. Mila hua code yahan daalo" autocomplete="off">
+      <small id="codeMsg" role="status">Payment ke baad aapko code mil jayega.</small>
+    </div>
+    <div class="row">
+      <button class="btn alt" id="proClose" type="button">Band karo</button>
+      <button class="btn" id="proGo" type="button">Activate</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO AD -->
+<div id="adModal" role="dialog" aria-modal="true" aria-labelledby="adTitle">
+  <div class="box">
+    <h3 id="adTitle">Free voices khatam ho gayi</h3>
+    <p>Ek chhota video ad dekho aur ek aur awaaz unlock karo.</p>
+    <div class="stage">
+      <video id="adVideo" playsinline hidden></video>
+      <div class="fake" id="adFake"><b id="adCount">10</b>Video ad yahan chalega</div>
+    </div>
+    <div class="prog"><i id="adProg"></i></div>
+    <div class="row">
+      <button class="btn alt" id="adCancel" type="button">Cancel</button>
+      <button class="btn" id="adGo" type="button" disabled>Unlock karo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// Navigation handlers are registered once below.
+
+// ===== SETTINGS =====
+var PIPER_URL = "https://cdn.jsdelivr.net/npm/@mintplex-labs/piper-tts-web@1.0.5/+esm";
+var FREE_LIMIT = 3;                    // roz kitni free voices
+var AD_VIDEOS = [];                    // apne video ad (mp4) ke links, jaise ["https://.../ad1.mp4"]. Khali = demo countdown
+var AD_SECONDS = 0;                    // no fake ad countdown; real ad integration later
+var UPI_ID = "yourname@upi";           // apni UPI ID
+var UPI_NAME = "Voxyfy Sound";
+var PRO_PRICE = 49;                    // ₹ per mahina
+var PRO_DAYS = 30;
+var WHATSAPP = "919999999999";         // country code ke saath, + ke bina
+var PRO_CODES = ["VOX-1111", "VOX-2222"]; // payment ke baad customer ko ek code do (naya code ban ke yahan add karein)
+var SAMPLES = [
+  ["Welcome", "नमस्ते! वॉइस बाय वॉक्सिफाई में आपका स्वागत है। यहाँ आप अपना हिंदी टेक्स्ट लिखकर उसे एक साफ़ और प्राकृतिक आवाज़ में सुन सकते हैं।"],
+  ["Ad", "बड़ी सेल शुरू! आज ही खरीदें और पाएँ पचास प्रतिशत तक की छूट। ऑफ़र सिर्फ़ तीन दिन के लिए।"],
+  ["Kahani", "एक समय की बात है, एक छोटे से गाँव में एक बूढ़ा किसान रहता था। उसके पास एक पुराना, मगर बहुत समझदार घोड़ा था।"]
+];
+// ====================
+
+var $ = function (id) { return document.getElementById(id); };
+var text = $("text"), msg = $("msg"), player = $("player"), bar = $("bar"), fill = $("fill");
+var engine = null, blobUrl = null, busy = false;
+
+function say(t) { msg.textContent = t; }
+function voiceId() { var selected=document.querySelector("input[name=v]:checked"); return selected ? selected.value : "hi_IN-priyamvada-medium"; }
+
+/* ---------- quota (roz reset) ---------- */
+function today() { return new Date().toISOString().slice(0, 10); }
+function loadQ() {
+  var q = { d: today(), used: 0, bonus: 0 };
+  try { var s = JSON.parse(localStorage.getItem("vbx_q")); if (s && s.d === today()) q = s; } catch (e) {}
+  return q;
+}
+function saveQ(q) { try { localStorage.setItem("vbx_q", JSON.stringify(q)); } catch (e) {} }
+function left(q) { return isPro() ? 9999 : Math.max(0, FREE_LIMIT - q.used) + q.bonus; }
+function renderQ() {
+  var q = loadQ(), l = Math.max(0, FREE_LIMIT - q.used), d = $("dots");
+  d.innerHTML = "";
+  for (var i = 0; i < FREE_LIMIT; i++) d.insertAdjacentHTML("beforeend", "<i class='" + (i < l ? "on" : "") + "'></i>");
+  $("qtxt").textContent = isPro() ? "Pro · unlimited" : (left(q) > 0 ? left(q) + " free baaki" : "Ad dekho, unlock karo");
+}
+renderQ();
+
+/* ---------- samples ---------- */
+SAMPLES.forEach(function (s) {
+  var b = document.createElement("button");
+  b.className = "chip"; b.type = "button"; b.textContent = s[0];
+  b.addEventListener("click", function () { text.value = s[1]; $("cnt").textContent = s[1].length; });
+  $("chips").appendChild(b);
+});
+text.addEventListener("input", function () { $("cnt").textContent = text.value.length; });
+
+/* ---------- video ad ---------- */
+var adTimer = null, adDone = null;
+function showVideoAd(done) {
+  // REAL ADS: yahan Google IMA SDK / apne ad network ka code lagayein, aur ad poora hone par adFinish() chalayein.
+  adDone = done;
+  var m = $("adModal"), v = $("adVideo"), go = $("adGo"), prog = $("adProg");
+  go.disabled = true; prog.style.width = "0";
+  m.classList.add("open");
+  if (AD_VIDEOS.length) {
+    $("adFake").hidden = true; v.hidden = false;
+    v.src = AD_VIDEOS[Math.floor(Math.random() * AD_VIDEOS.length)];
+    v.ontimeupdate = function () { if (v.duration) prog.style.width = (v.currentTime / v.duration * 100) + "%"; };
+    v.onended = adFinish;
+    v.play().catch(function () {});
+  } else {
+    $("adFake").hidden = false; v.hidden = true;
+    $("adFake").textContent = "Real ad service abhi connect nahi hai. Free quota khatam hone par baad mein dobara try karein.";
+    $("adGo").disabled = true;
+    say("Real ad integration abhi pending hai; demo countdown ko hata diya gaya hai.");
+  }
+}
+function adFinish() { $("adGo").disabled = false; $("adProg").style.width = "100%"; }
+function closeAd() {
+  clearInterval(adTimer);
+  var v = $("adVideo"); v.pause(); v.removeAttribute("src"); v.load();
+  $("adModal").classList.remove("open");
+}
+$("adCancel").addEventListener("click", closeAd);
+$("adGo").addEventListener("click", function () {
+  var q = loadQ(); q.bonus++; saveQ(q); renderQ();
+  closeAd();
+  if (adDone) adDone();
+});
+
+/* ---------- TTS ---------- */
+async function loadEngine() {
+  if (!engine) {
+    if (!window.isSecureContext && location.protocol !== 'file:') {
+      throw new Error('Secure HTTPS connection required');
+    }
+    engine = await import(PIPER_URL);
+    ['voices','stored','download','predict'].forEach(function (method) {
+      if (typeof engine[method] !== 'function') throw new Error('TTS engine method missing: ' + method);
+    });
+  }
+  return engine;
+}
+
+function cleanSpeechText(value) {
+  return value.normalize("NFC").replace(/[\t\r]+/g, " ").replace(/ {2,}/g, " ").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+function fallbackSpeak() {
+  if (!("speechSynthesis" in window)) return false;
+  speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(cleanSpeechText(text.value)); u.lang = "hi-IN";
+  u.rate = Number($("speedControl").value);
+  speechSynthesis.speak(u); return true;
+}
+
+async function generate() {
+  if (busy) return;
+  var t = cleanSpeechText(text.value);
+  if (!t) { say("Pehle text likhein."); return; }
+  if (left(loadQ()) <= 0) { showVideoAd(generate); return; }
+  busy = true; $("gen").disabled = true; $("dl").disabled = true;
+  bar.style.display = "none"; fill.style.width = "0";
+  say("Engine load ho raha hai…");
+  try {
+    var tts = await loadEngine(), id = voiceId(), have = await tts.stored();
+    if (have.indexOf(id) === -1) {
+      say("Pehli baar voice download ho rahi hai (sirf ek baar)…");
+      bar.style.display = "block";
+      await tts.download(id, function (p) { if (p && p.total) fill.style.width = Math.round(p.loaded / p.total * 100) + "%"; });
+      bar.style.display = "none";
+    }
+    say("Awaaz ban rahi hai…");
+    var wav = await tts.predict({ text: t, voiceId: id });
+    if (blobUrl) URL.revokeObjectURL(blobUrl);
+    blobUrl = URL.createObjectURL(wav);
+    player.src = blobUrl; player.hidden = false;
+    player.playbackRate = Number($("speedControl").value); player.volume = Number($("volumeControl").value);
+    if ("preservesPitch" in player) player.preservesPitch = true;
+    await player.play();
+    $("dl").disabled = false;
+    if (!isPro()) { var q = loadQ(); if (q.used < FREE_LIMIT) q.used++; else q.bonus--; saveQ(q); } renderQ();
+    saveRecent(t, id);
+    say("Taiyar! Suno ya download karo.");
+  } catch (e) {
+    bar.style.display = "none";
+    console.error('Voxyfy AI voice error:', e);
+    var detail = (e && e.message) ? e.message : 'Unknown engine error';
+    var usedDeviceVoice = fallbackSpeak();
+    say((usedDeviceVoice
+      ? 'AI voice load nahi hui; abhi device voice chal rahi hai. '
+      : 'AI voice generate nahi ho saki. ') + 'Technical detail: ' + detail + '. HTTPS hosting, internet aur selected voice model check karein.');
+  }
+  busy = false; $("gen").disabled = false;
+}
+$("gen").addEventListener("click", generate);
+$("dl").addEventListener("click", function () {
+  if (!blobUrl) return;
+  var a = document.createElement("a");
+  a.href = blobUrl; a.download = "voice-by-voxyfy.wav";
+  document.body.appendChild(a); a.click(); a.remove();
+});
+
+/* ---------- Home / creator navigation + playback controls ---------- */
+function openCreator(){ document.body.classList.add("studio-open"); window.scrollTo({top:0,behavior:"smooth"}); }
+function openHome(){ document.body.classList.remove("studio-open"); window.scrollTo({top:0,behavior:"smooth"}); }
+["createNew","openTTS"].forEach(function(id){ $(id).addEventListener("click",openCreator); });
+$("openVideo").addEventListener("click",function(){ say("Video Editor abhi development mein hai."); openCreator(); });
+$("backHome").addEventListener("click",openHome);
+$("seeAll").addEventListener("click",openCreator);
+document.querySelectorAll(".bottom-nav button").forEach(function(b){ b.addEventListener("click",function(){ var page=b.getAttribute("data-page"); if(page==="home")openHome();else if(page==="creator"||page==="new")openCreator();else{openHome();say(page==="explore"?"Voice Explore jald aa raha hai.":"Templates jald aa rahe hain.");} }); });
+function saveRecent(value,voice){try{var list=JSON.parse(localStorage.getItem("voxyfy_recent")||"[]");list.unshift({text:value.slice(0,100),voice:voice,date:new Date().toLocaleDateString()});localStorage.setItem("voxyfy_recent",JSON.stringify(list.slice(0,8)));renderRecent();}catch(e){}}
+function renderRecent(){var host=$("recentProjects");if(!host)return;var list=[];try{list=JSON.parse(localStorage.getItem("voxyfy_recent")||"[]");}catch(e){}host.innerHTML="";if(!list.length){host.innerHTML='<div class="empty-project">Your generated voice projects will appear here.</div>';return;}list.forEach(function(item){var card=document.createElement("div"),top=document.createElement("div"),title=document.createElement("div"),sub=document.createElement("div");card.className="project-card";top.className="project-top";top.textContent="♫";title.className="project-title";title.textContent=item.text;sub.className="project-sub";sub.textContent=item.voice+" · "+item.date;card.append(top,title,sub);host.appendChild(card);});}
+renderRecent();
+$("speedControl").addEventListener("input",function(){$("speedValue").textContent=Number(this.value).toFixed(2).replace(/0$/,'')+"×";player.playbackRate=Number(this.value);});
+$("volumeControl").addEventListener("input",function(){$("volumeValue").textContent=Math.round(Number(this.value)*100)+"%";player.volume=Number(this.value);});
+
+// Dynamic voice catalogue: show only models exposed by the installed Piper engine.
+var voiceCatalogueReady = false;
+function prettyVoiceName(id){
+  var part=id.split('-').slice(1,-1).join(' ').replace(/_/g,' ');
+  if(!part) part=id.split('-')[0];
+  return part.replace(/\b\w/g,function(c){return c.toUpperCase();});
+}
+function voiceLanguage(id){return /^hi_IN-/i.test(id)?'hi':(/^en_(US|GB)-/i.test(id)?'en':'other');}
+function voiceGender(id){
+  var x=id.toLowerCase();
+  if(/female|woman|amy|alba|cori|lessac|hfc_female|jenny|kathleen/.test(x))return 'female';
+  if(/male|man|alan|joe|mike|ryan|rohan|pratham/.test(x))return 'male';
+  return 'other';
+}
+function voiceLabel(lang){return lang==='hi'?'Hindi (India)':lang==='en'?'English':'Other';}
+function addVoiceCard(id){
+  if(document.querySelector('.voice-choice[data-voice="'+CSS.escape(id)+'"]'))return;
+  var lang=voiceLanguage(id); if(lang==='other')return;
+  var gender=voiceGender(id), name=prettyVoiceName(id), card=document.createElement('div');
+  card.className='voice-choice'; card.dataset.voice=id; card.dataset.name=name.toLowerCase(); card.dataset.gender=gender; card.dataset.language=lang;
+  var avatar=document.createElement('span'); avatar.className='avatar'; avatar.textContent=gender==='female'?'F':gender==='male'?'M':'•';
+  var info=document.createElement('span'), strong=document.createElement('strong'), small=document.createElement('small'), em=document.createElement('em');
+  strong.textContent=name; small.append(document.createTextNode((gender==='other'?'Voice':gender[0].toUpperCase()+gender.slice(1))+' · '+voiceLabel(lang)+' · ')); em.textContent=lang==='hi'?'India':(id.indexOf('en_GB-')===0?'UK':'US'); small.appendChild(em); info.append(strong,small);
+  var preview=document.createElement('button'); preview.type='button'; preview.dataset.preview=id; preview.textContent='▶ Preview';
+  card.append(avatar,info,preview); $('voiceLibrary').appendChild(card);
+  var radio=document.createElement('input'); radio.type='radio'; radio.name='v'; radio.value=id; radio.hidden=true; document.querySelector('.voices').appendChild(radio);
+}
+function filterVoices(){
+  var query=$('voiceSearch').value.trim().toLowerCase(), gender=$('voiceGender').value, language=$('voiceLanguage').value, visible=0;
+  document.querySelectorAll('.voice-choice').forEach(function(card){
+    var matchName=(card.dataset.name||'').indexOf(query)!==-1;
+    var matchGender=gender==='all'||card.dataset.gender===gender;
+    var matchLanguage=language==='all'||(card.dataset.language||'hi')===language;
+    card.hidden=!(matchName&&matchGender&&matchLanguage); if(!card.hidden)visible++;
+  });
+  $('voiceStatus').textContent=visible+' voices shown · First use downloads the model to your device.';
+}
+$('voiceSearch').addEventListener('input',filterVoices);
+$('voiceGender').addEventListener('change',filterVoices);
+$('voiceLanguage').addEventListener('change',filterVoices);
+$('voiceLibrary').addEventListener('click',async function(e){
+  var card=e.target.closest('.voice-choice'); if(!card)return;
+  var id=card.dataset.voice;
+  if(!e.target.closest('[data-preview]')){
+    var radio=document.querySelector('input[name="v"][value="'+CSS.escape(id)+'"]'); if(radio)radio.checked=true;
+    document.querySelectorAll('.voice-choice').forEach(function(c){c.classList.toggle('selected',c===card);}); return;
+  }
+  var preview=e.target.closest('[data-preview]'); preview.disabled=true; preview.textContent='Loading…';
+  try{
+    var tts=await loadEngine(), have=await tts.stored();
+    if(have.indexOf(id)===-1) await tts.download(id,function(p){if(p&&p.total){$('voiceStatus').textContent='Downloading '+prettyVoiceName(id)+' · '+Math.round(p.loaded/p.total*100)+'%';}});
+    var sampleText=voiceLanguage(id)==='hi'?'नमस्ते! यह वॉक्सिफाई की आवाज़ का नमूना है।':'Hello! Welcome to Voxyfy. This is a sample of the selected voice.';
+    var sample=await tts.predict({text:sampleText,voiceId:id});
+    if(blobUrl)URL.revokeObjectURL(blobUrl); blobUrl=URL.createObjectURL(sample);
+    player.src=blobUrl; player.hidden=false; player.playbackRate=Number($('speedControl').value); player.volume=Number($('volumeControl').value);
+    if('preservesPitch' in player)player.preservesPitch=true; await player.play();
+    var radio=document.querySelector('input[name="v"][value="'+CSS.escape(id)+'"]'); if(radio)radio.checked=true;
+    document.querySelectorAll('.voice-choice').forEach(function(c){c.classList.toggle('selected',c===card);});
+    say('Preview playing: '+prettyVoiceName(id));
+  }catch(err){console.error(err);say('AI voice preview load nahi hua: '+((err&&err.message)?err.message:'Unknown error')+'. HTTPS aur internet check karein.');}
+  preview.disabled=false; preview.textContent='▶ Preview';
+});
+async function loadVoiceCatalogue(){
+  try{
+    var tts=await loadEngine(), available=await tts.voices(), ids=Array.isArray(available)?available:Object.keys(available||{});
+    ids.forEach(function(id){if(voiceLanguage(id)!=='other')addVoiceCard(id);});
+    voiceCatalogueReady=true;
+    var total=document.querySelectorAll('.voice-choice').length;
+    $('voiceCount').textContent='Hindi + English · '+total+' voices';
+    filterVoices();
+  }catch(err){console.warn('Voice catalogue unavailable',err);$('voiceCount').textContent='3 Hindi voices · catalogue unavailable';$('voiceStatus').textContent='Abhi default Hindi voices use kar sakte hain. Catalogue load karne ke liye internet zaroori hai.';}
+}
+loadVoiceCatalogue();
+
+/* ---------- Pro + links ---------- */
+function isPro() { try { return +localStorage.getItem("vbx_pro") > Date.now(); } catch (e) { return false; } }
+function applyPro() {
+  var p = isPro();
+  document.body.classList.toggle("is-pro", p);
+  text.maxLength = p ? 5000 : 2000; $("mx").textContent = p ? 5000 : 2000;
+  $("proBtn").textContent = p ? "Pro · active" : "Pro lo";
+  renderQ();
+}
+function openPro() { $("proModal").style.display = "flex"; }
+function closePro() { $("proModal").style.display = "none"; }
+$("pp").textContent = PRO_PRICE; $("pp2").textContent = PRO_PRICE;
+$("proBtn").addEventListener("click", openPro);
+$("proBtn2").addEventListener("click", openPro);
+$("proClose").addEventListener("click", closePro);
+$("upiBtn").href = "upi://pay?pa=" + UPI_ID + "&pn=" + encodeURIComponent(UPI_NAME) + "&am=" + PRO_PRICE + "&cu=INR&tn=" + encodeURIComponent("Voice Pro");
+$("waBtn").href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent("Namaste! Maine Voice Pro (₹" + PRO_PRICE + ") ka payment kar diya hai. Screenshot attach hai, code bhej dijiye.");
+$("hireBtn").href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent("Namaste! Mujhe voice over artist chahiye.");
+$("proGo").addEventListener("click", function () {
+  var c = $("codeIn").value.trim().toUpperCase();
+  if (PRO_CODES.indexOf(c) > -1) {
+    try { localStorage.setItem("vbx_pro", String(Date.now() + PRO_DAYS * 864e5)); } catch (e) {}
+    applyPro(); closePro(); say("Pro active ho gaya. Enjoy!");
+  } else { $("codeMsg").textContent = "Code galat hai. Dobara check karein."; }
+});
+applyPro();
+
+/* ---------- live waveform ---------- */
+var cv = $("wave"), cx = cv.getContext("2d"), actx = null, an = null, data = null;
+var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function fit() {
+  var r = cv.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+  cv.width = r.width * d; cv.height = r.height * d;
+}
+fit(); window.addEventListener("resize", fit);
+player.addEventListener("play", function () {
+  try {
+    if (!actx) {
+      actx = new (window.AudioContext || window.webkitAudioContext)();
+      var src = actx.createMediaElementSource(player);
+      an = actx.createAnalyser(); an.fftSize = 128; an.smoothingTimeConstant = 0.8;
+      src.connect(an); an.connect(actx.destination);
+      data = new Uint8Array(an.frequencyBinCount);
+    }
+    if (actx.state === "suspended") actx.resume();
+  } catch (e) { an = null; }
+});
+function draw(ts) {
+  var w = cv.width, h = cv.height, n = 48, gap = w / n, bw = gap * 0.58;
+  cx.clearRect(0, 0, w, h);
+  var g = cx.createLinearGradient(0, 0, w, 0);
+  g.addColorStop(0, "#7c5cff"); g.addColorStop(0.6, "#ff5c8a"); g.addColorStop(1, "#ffc35c");
+  cx.fillStyle = g;
+  var live = an && !player.paused && !player.ended;
+  if (live) an.getByteFrequencyData(data);
+  for (var i = 0; i < n; i++) {
+    var a;
+    if (live) a = Math.pow((data[Math.floor(i / n * data.length * 0.8)] || 0) / 255, 1.2);
+    else a = 0.12 + 0.1 * Math.sin(i * 0.5 + (still ? 0 : ts / 700)) + 0.08 * Math.sin(i * 0.17 - (still ? 0 : ts / 1100));
+    var bh = Math.max(h * 0.05, a * h * 0.95), x = i * gap + (gap - bw) / 2;
+    cx.beginPath();
+    if (cx.roundRect) cx.roundRect(x, (h - bh) / 2, bw, bh, bw / 2); else cx.rect(x, (h - bh) / 2, bw, bh);
+    cx.fill();
+  }
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>
